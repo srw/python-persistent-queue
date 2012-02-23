@@ -7,14 +7,8 @@ import sys
 MAX_INT = sys.maxint
 MIN_INT = -MAX_INT - 1
 
-DEBUG = True
-#DEBUG = False
-
-hello = 'popo'
-class APersistentQueue:
-	hello = 'dkdkdkd'
-	def __init__(self):
-		print hello
+#DEBUG = True
+DEBUG = False
 
 class Root(dybase.Persistent):
 	def __init__(self):
@@ -22,11 +16,6 @@ class Root(dybase.Persistent):
 		self.stop = 0
 
 class SizeOfPersistentQueueExceeded(Exception):
-#	def __init__(self, value):
-#		self.value = value
-
-#	def __str__(self):
-#		return __repr__(self.value)
 	pass
 
 class incomplete_persistent_deque:
@@ -121,8 +110,7 @@ class PersistentQueue(Queue):
 
 	#def ack(self, item):
 
-class ElementTest(dybase.Persistent):
-#class ElementTest:
+class ElementTest:
 	def __init__(self, value):
 		self.value = value
 
@@ -133,34 +121,17 @@ class ElementTest(dybase.Persistent):
 		return self.value
 
 def test1():
-#	q = PersistentQueue("myqueue.dbs")
-	if True:
-#	if False:
-		q.put(ElementTest('one'))
-		q.put(ElementTest('two'))
-		q.put(ElementTest('three'))
-		
-		print "q.root.start =", q.queue.root.start
-		print "q.root.stop =", q.queue.root.stop
+	q = PersistentQueue("myqueue.dbs")
+	if not q.empty(): # get pending items
+		while not q.empty():
+			e = q.get()
+			print e
 
-
-		sys.exit(0)
-
-	while not q.empty():
-		e = q.get()
-		print e
-
-
-
-
-
-
+	for s in ['one', 'two', 'three']:
+		q.put(ElementTest(s))
 	
 
-def main():
-#	pq = APersistentQueue()
-#	pqueue = PersistentQueue(10)
-#	raise SizeOfPersistentQueueExceeded()
+def main(): # run this script twice to see the persisted elements
 	test1()
 
 
